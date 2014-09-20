@@ -5,6 +5,19 @@ MacbookAirを使ってclonezillaやCentOSをiPXE boot
 
 - [MacbookAirを使ってclonezillaやCentOSをiPXE bootするの作った - Qiita](http://qiita.com/tukiyo3/items/2a08060e17992fdc6adc)
 
+# 環境
+
+* dnsmasq (`brew install dnsmasq`)
+  * DHCPサーバ、TFTPサーバ
+* [iPXE](ipxe.org)
+  * PXE BOOTイメージ
+* [CloneZilla](http://sourceforge.jp/projects/sfnet_clonezilla/releases/)
+* MacbookAir + [usb nic](http://buffalo.jp/products/catalog/network/lua3-u2-atx/)
+
+## 構成図
+
+![ネットワーク図.png](https://qiita-image-store.s3.amazonaws.com/0/25728/299e3c28-15cf-849f-4bae-f0d8cdcef57c.png)
+
 # 準備
 
 1. brew install dnsmasq
@@ -15,7 +28,7 @@ MacbookAirを使ってclonezillaやCentOSをiPXE boot
 ## CloneZillaをネットワークブートさせたい場合
 
 1. cd clonezilla
-1. ./extract_clonezilla_i486.sh 
+1. ./extract_clonezilla_i486.sh
 
 を実行し、以下ファイルが作成される。
 
@@ -36,3 +49,4 @@ MacbookAirを使ってclonezillaやCentOSをiPXE boot
 # 注意点
 
 * CentOS7はネットワークブート成功していない。後日対応するかも
+
