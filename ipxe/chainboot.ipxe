@@ -1,0 +1,64 @@
+#!ipxe
+    dhcp
+    set dns 8.8.8.8
+
+#env
+    set http_server 192.168.9.9:8000
+    set img_server http://ftp.riken.jp/Linux/centos
+    set cent_boot_opt_msg Enter boot option. ex: ks=http://192.168.9.9:8000/ks/sample.ks
+
+:boot_menu
+menu
+    item centos7_x86_64  CentOS 7_x86_64 (experimental!!)
+    item centos6_x86_64  CentOS 6_x86_64
+    item centos6_i386    CentOS 6_i386
+    item centos5_x86_64  CentOS 5_x86_64
+    item centos5_i386    CentOS 5_i386
+    item clonezilla      clonezilla i486 (prepare run ./clonezilla/extract_clonezilla_i486.sh)
+    #
+    item ipxe_config     Enter iPXE config
+    item ipxe_shell      Enter iPXE shell
+
+choose --default config --timeout 30000 target && goto ${target}
+
+:ipxe_shell
+    shell
+    goto boot_menu
+
+:ipxe_config
+    config
+    goto boot_menu
+
+###########
+# centos
+###########
+:centos7_x86_64
+    echo ${cent_boot_opt_msg} && read cent_bootopt
+    initrd ${img_server}/7/os/x86_64/isolinux/initrd.img
+    kernel ${img_server}/7/os/x86_64/isolinux/vmlinuz ${cent_bootopt}
+    boot
+:centos6_x86_64
+    echo ${cent_boot_opt_msg} && read cent_bootopt
+    initrd ${img_server}/6/os/x86_64/isolinux/initrd.img
+    kernel ${img_server}/6/os/x86_64/isolinux/vmlinuz ${cent_bootopt}
+    boot
+:centos5_x86_64
+    echo ${cent_boot_opt_msg} && read cent_bootopt
+    initrd ${img_server}/5/os/x86_64/isolinux/initrd.img
+    kernel ${img_server}/5/os/x86_64/isolinux/vmlinuz ${cent_bootopt}
+    boot
+
+:centos6_i386
+    echo ${cent_boot_opt_msg} && read cent_bootopt
+    initrd ${img_server}/6/os/i386/isolinux/initrd.img
+    kernel ${img_server}/6/os/i386/isolinux/vmlinuz ${cent_bootopt}
+    boot
+:centos5_i386
+    echo ${cent_boot_opt_msg} && read cent_bootopt
+    initrd ${img_server}/5/os/i386/isolinux/initrd.img
+    kernel ${img_server}/5/os/i386/isolinux/vmlinuz ${cent_bootopt}
+    boot
+:clonezilla
+    kernel   http://${http_server}/clonezilla/vmlinuz boot=live union=aufs noswap noprompt vga=788 fetch=http://${http_server}/clonezilla/filesystem.squashfs
+    initrd   http://${http_server}/clonezilla/initrd.img
+    boot

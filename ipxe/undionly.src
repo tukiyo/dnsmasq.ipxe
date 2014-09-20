@@ -1,0 +1,4 @@
+#!ipxe
+    dhcp
+    set dns 8.8.8.8
+    chain http://192.168.9.9:8000/ipxe/chainboot.ipxe
