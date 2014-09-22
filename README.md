@@ -5,14 +5,19 @@ MacbookAirを使ってclonezillaやCentOSをiPXE boot
 
 - [MacbookAirを使ってclonezillaやCentOSをiPXE bootするの作った - Qiita](http://qiita.com/tukiyo3/items/2a08060e17992fdc6adc)
 
+
+* [download - dnsmasq.ipxe](https://github.com/tukiyo/dnsmasq.ipxe)
+* [iPXEでCentOS5,6インストーラをboot - Qiita](http://qiita.com/tukiyo3/items/bdb4d28d4fa7059c5d14)
+
 # 環境
 
 * dnsmasq (`brew install dnsmasq`)
   * DHCPサーバ、TFTPサーバ
-* [iPXE](ipxe.org)
+* [iPXE](http://ipxe.org)、[ROM-o-matic.eu | Generate iPXE images | open source network boot firmware](https://rom-o-matic.eu/)
   * PXE BOOTイメージ
-* [CloneZilla](http://sourceforge.jp/projects/sfnet_clonezilla/releases/)
 * MacbookAir + [usb nic](http://buffalo.jp/products/catalog/network/lua3-u2-atx/)
+* HTTPサーバ + [CloneZilla](http://sourceforge.jp/projects/sfnet_clonezilla/releases/)
+  * HTTPサーバのためTFTPより3倍くらい転送速度が早い
 
 ## 構成図
 
@@ -24,6 +29,7 @@ MacbookAirを使ってclonezillaやCentOSをiPXE boot
 1. Macbook AirにUSB LANアダプターを接続 (en4として認識される)
 1. en4のIPアドレスを192.168.9.9に設定
 1. USB LANアダプターと、ネットワークブートさせたいPCをLANケーブルで直繋ぎする
+
 
 ## CloneZillaをネットワークブートさせたい場合
 
@@ -49,4 +55,17 @@ MacbookAirを使ってclonezillaやCentOSをiPXE boot
 # 注意点
 
 * CentOS7はネットワークブート成功していない。後日対応するかも
+* PXEブートの途中で止まる場合、PXEブートイメージを切り替えてください。
 
+```diff:dnsmasq.conf
+  # PXEブート完了しない場合は、以下切り替えて試すこと。
+- dhcp-boot=undionly.kpxe
++ dhcp-boot=ipxe.kkpxe
+  #dhcp-boot=ipxe.kkkpxe
+```
+
+* インターネット共有をしていると以下エラーが出るので同時にはしないこと。
+
+> dnsmasq: failed to bind DHCP server socket: Address already in use
+
+![インターネット共有.png](https://qiita-image-store.s3.amazonaws.com/0/25728/f6c26db8-c9d1-2d6c-5f8a-6aee8d9bd61a.png)

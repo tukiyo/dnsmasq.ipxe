@@ -9,12 +9,12 @@
 
 :boot_menu
 menu
+    item clonezilla      clonezilla i486 (prepare run ./clonezilla/extract_clonezilla_i486.sh)
     item centos7_x86_64  CentOS 7_x86_64 (experimental!!)
     item centos6_x86_64  CentOS 6_x86_64
     item centos6_i386    CentOS 6_i386
     item centos5_x86_64  CentOS 5_x86_64
     item centos5_i386    CentOS 5_i386
-    item clonezilla      clonezilla i486 (prepare run ./clonezilla/extract_clonezilla_i486.sh)
     #
     item ipxe_config     Enter iPXE config
     item ipxe_shell      Enter iPXE shell
@@ -29,14 +29,15 @@ choose --default config --timeout 30000 target && goto ${target}
     config
     goto boot_menu
 
-###########
+############
 # centos
-###########
+############
 :centos7_x86_64
     echo ${cent_boot_opt_msg} && read cent_bootopt
     initrd ${img_server}/7/os/x86_64/isolinux/initrd.img
     kernel ${img_server}/7/os/x86_64/isolinux/vmlinuz ${cent_bootopt}
     boot
+
 :centos6_x86_64
     echo ${cent_boot_opt_msg} && read cent_bootopt
     initrd ${img_server}/6/os/x86_64/isolinux/initrd.img
@@ -58,7 +59,11 @@ choose --default config --timeout 30000 target && goto ${target}
     initrd ${img_server}/5/os/i386/isolinux/initrd.img
     kernel ${img_server}/5/os/i386/isolinux/vmlinuz ${cent_bootopt}
     boot
+
+############
+# clonezilla
+############
 :clonezilla
-    kernel   http://${http_server}/clonezilla/vmlinuz boot=live union=aufs noswap noprompt vga=788 fetch=http://${http_server}/clonezilla/filesystem.squashfs
+    kernel   http://${http_server}/clonezilla/vmlinuz boot=live config noswap nolocales edd=on nomodeset ocs_live_run="ocs-live-general" ocs_live_extra_param="" keyboard-layouts="NONE" timezone="Asia/Tokyo" ocs_live_batch="no" locales="ja_JP.UTF-8" vga=788 nosplash noprompt fetch=http://${http_server}/clonezilla/filesystem.squashfs
     initrd   http://${http_server}/clonezilla/initrd.img
     boot
