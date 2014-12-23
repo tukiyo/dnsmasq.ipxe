@@ -1,7 +1,8 @@
 BASE_URL=http://ftp.jaist.ac.jp/pub/Linux/ArchLinux/iso/latest/arch
 
-for arch in i686 x86_64
+for arch in x86_64 i686
 do
+  echo \#\# $arch
   if [ ! -d $arch ];then
       mkdir $arch
   fi
