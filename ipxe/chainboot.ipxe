@@ -1,9 +1,13 @@
 #!ipxe
     dhcp
+    #set net0/ip 192.168.30.32
+    #set net0/netmask 255.255.255.0
+    #set net0/gateway 192.168.30.1
+    #set dns 192.168.0.50
     set dns 8.8.8.8
 
 #env
-    set http_server 192.168.9.9:8000
+    set http_server http://192.168.9.9:8000
     set img_server http://ftp.riken.jp/Linux/centos
     set cent_boot_opt_msg Enter boot option. ex: ks=http://192.168.9.9:8000/ks/sample.ks
 
@@ -58,8 +62,10 @@ choose --default config --timeout 30000 target && goto ${target}
     boot
 :centos5_i386
     echo ${cent_boot_opt_msg} && read cent_bootopt
-    initrd ${img_server}/5/os/i386/isolinux/initrd.img
-    kernel ${img_server}/5/os/i386/isolinux/vmlinuz ${cent_bootopt}
+    #initrd ${img_server}/5/os/i386/isolinux/initrd.img
+    #kernel ${img_server}/5/os/i386/isolinux/vmlinuz ${cent_bootopt}
+    initrd ${http_server}/5/initrd.img
+    kernel ${http_server}/5/vmlinuz ${cent_bootopt}
     boot
 
 ############
