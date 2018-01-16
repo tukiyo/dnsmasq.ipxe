@@ -8,7 +8,7 @@ fi
 
 DIRNAME=ipxe
 if [ ! -e /tmp/$DIRNAME ];then
-    ln -s `pwd`/$DIRNAME /tmp/$DIRNAME
+    cp -a `pwd`/$DIRNAME /tmp/
 fi
 
 if [ ! `pgrep -f "python -m SimpleHTTPServer 8000"` ];then
