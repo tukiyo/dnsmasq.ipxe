@@ -34,7 +34,7 @@ MacbookAirを使ってclonezillaやCentOSをiPXE boot
 ## CloneZillaをネットワークブートさせたい場合
 
 1. cd clonezilla
-1. ./extract_clonezilla_i486.sh
+1. ./extract_clonezilla_i686.sh
 
 を実行し、以下ファイルが作成される。
 
