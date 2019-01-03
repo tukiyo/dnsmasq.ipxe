@@ -72,8 +72,8 @@ choose --default config --timeout 30000 target && goto ${target}
 # clonezilla
 ############
 :clonezilla
-    kernel   http://${http_server}/clonezilla/vmlinuz boot=live config noswap nolocales edd=on nomodeset ocs_live_run="ocs-live-general" ocs_live_extra_param="" keyboard-layouts="NONE" timezone="Asia/Tokyo" ocs_live_batch="no" locales="ja_JP.UTF-8" vga=788 nosplash noprompt fetch=http://${http_server}/clonezilla/filesystem.squashfs
-    initrd   http://${http_server}/clonezilla/initrd.img
+    kernel   ${http_server}/clonezilla/vmlinuz boot=live config noswap nolocales edd=on nomodeset ocs_live_run="ocs-live-general" ocs_live_extra_param="" keyboard-layouts="NONE" timezone="Asia/Tokyo" ocs_live_batch="no" locales="ja_JP.UTF-8" vga=788 nosplash noprompt fetch=http://${http_server}/clonezilla/filesystem.squashfs
+    initrd   ${http_server}/clonezilla/initrd.img
     boot
 
 ############
