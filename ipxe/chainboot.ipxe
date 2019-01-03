@@ -14,6 +14,7 @@
 :boot_menu
 menu
     item clonezilla      clonezilla (prepare run ./clonezilla/extract_clonezilla_*.sh)
+    item debian9         debian9
     item archlinux_i686  ArchLinux i686
     item archlinux_x86_64 ArchLinux x86_64
     item centos7_x86_64  CentOS 7 x86_64 (experimental!!)
@@ -74,6 +75,11 @@ choose --default config --timeout 30000 target && goto ${target}
 :clonezilla
     kernel   ${http_server}/clonezilla/vmlinuz boot=live config noswap nolocales edd=on nomodeset ocs_live_run="ocs-live-general" ocs_live_extra_param="" keyboard-layouts="NONE" timezone="Asia/Tokyo" ocs_live_batch="no" locales="ja_JP.UTF-8" vga=788 nosplash noprompt fetch=${http_server}/clonezilla/filesystem.squashfs
     initrd   ${http_server}/clonezilla/initrd.img
+    boot
+
+:debian9
+    kernel   ${http_server}/debian9/linux
+    initrd   ${http_server}/debian9/initrd.gz
     boot
 
 ############
